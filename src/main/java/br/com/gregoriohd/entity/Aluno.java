@@ -1,7 +1,8 @@
-package br.com.gregoriohd.core;
+package br.com.gregoriohd.entity;
 
 import java.time.LocalDate;
 
+ 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,11 +29,11 @@ public class Aluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
-	@Nonnull
+	
+	@Column(nullable = false)
 	@NotBlank
 	private String nome;
-
+	
 	private LocalDate data_nascimento;
 
 	private String endereco;

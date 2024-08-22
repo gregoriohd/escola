@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.gregoriohd.core.Aluno;
+import br.com.gregoriohd.entity.Aluno;
 
 @Repository
 public interface AlunoRespository extends JpaRepository<Aluno, Integer> {
