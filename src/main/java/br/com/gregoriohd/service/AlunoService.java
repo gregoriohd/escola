@@ -2,9 +2,13 @@ package br.com.gregoriohd.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import br.com.gregoriohd.dto.AlunoDTORequest;
+import br.com.gregoriohd.dto.AlunoDTOResponse;
 import br.com.gregoriohd.entity.Aluno;
 import br.com.gregoriohd.repository.AlunoRespository;
 import jakarta.transaction.Transactional;
@@ -13,21 +17,36 @@ import jakarta.transaction.Transactional;
 public class AlunoService {
 
 	@Autowired
-	private AlunoRespository alunoRespository;
-
-	public List<Aluno> todosAlunos() {
-		return alunoRespository.findAll();
+	private AlunoRespository alunoRepository;
+	
+	@Autowired
+	private ModelMapper mapper;
+	
+	public List<AlunoDTOResponse> todosAlunos() {
+		
+		@SuppressWarnings("unchecked")
+		List<AlunoDTOResponse> listDTO = mapper.map(alunoRepository.findAll(), List.class);
+		return listDTO;
 	}
 
 	@Transactional
-	public Aluno salvar(Aluno aluno) throws Exception {
-		boolean emailEmUso = alunoRespository.findByEmail(aluno.getEmail())
-				.stream().anyMatch(alunoExiste -> alunoExiste.equals(aluno));
-		if(emailEmUso) {
-			throw new Exception("Email ja em uso");
+	public AlunoDTOResponse salvar(AlunoDTORequest alunoDTORequest) {
+		AlunoDTOResponse alunoDTOResponse;
+		try{
+			
+			Aluno aluno = mapper.map(alunoDTORequest, Aluno.class);
+			
+			aluno = alunoRepository.save(aluno);
+			
+			alunoDTOResponse = mapper.map(aluno, AlunoDTOResponse.class);
+			
+		}catch (DataIntegrityViolationException e) {
+			throw new IllegalArgumentException(" Email em uso ");
 		}
 		
-		return alunoRespository.save(aluno);
+		
+		
+		return alunoDTOResponse;
 	}
 
 }

@@ -2,14 +2,11 @@ package br.com.gregoriohd.entity;
 
 import java.time.LocalDate;
 
- 
+import br.com.gregoriohd.mapped.Pessoa;
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -22,24 +19,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "Alunos")
-public class Aluno {
-
-	@Column(name = "aluno_id")
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+@Table(name = "alunos", uniqueConstraints = {
+	    @UniqueConstraint(columnNames = {"email"})
+	})
+public class Aluno extends Pessoa {
 	
-	@Column(nullable = false)
-	@NotBlank
-	private String nome;
-	
-	private LocalDate data_nascimento;
-
 	private String endereco;
 
 	private String telefone;
-
+	
 	@Nonnull
 	@Email
 	@NotBlank

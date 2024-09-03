@@ -8,7 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.gregoriohd.entity.Aluno;
+import br.com.gregoriohd.dto.AlunoDTORequest;
+import br.com.gregoriohd.dto.AlunoDTOResponse;
 import br.com.gregoriohd.service.AlunoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +24,12 @@ public class AlunoController {
 	private AlunoService alunoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Aluno>> todosAlunos() {
+	public ResponseEntity<List<AlunoDTOResponse>> todosAlunos() {
 		return ResponseEntity.ok(alunoService.todosAlunos());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Aluno> salvarAluno(@RequestBody Aluno aluno) throws Exception{
+	public ResponseEntity<AlunoDTOResponse> salvarAluno(@RequestBody AlunoDTORequest aluno) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(alunoService.salvar(aluno));
 	}
 

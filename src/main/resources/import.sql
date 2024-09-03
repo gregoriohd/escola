@@ -1,1 +1,1 @@
-insert into alunos(nome, data_nascimento, endereco, telefone, email) values ('Gregorio', '26-09-1987', 'enereco a', 'telefone a', 'admin@gregoriohd.com.br')
+insert into alunos(nome, sobrenome, data_nascimento, endereco, telefone, email) values ('Gregorio', 'Santos', '26-09-1987', 'enereco a', '71 98772-0087', 'admin@gregoriohd.com.br')
